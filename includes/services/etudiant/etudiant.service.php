@@ -7,6 +7,12 @@ function get_etudiants() {
     return $etudiants;
 }
 
+function get_etudiant_by_id($id) {
+    $id = intval($id);
+    $etudiant = recupererUtilisateurParId($id);
+    return $etudiant;
+}
+
 function ajouterEtudiant($numeroEtudiant, $prenom, $nom, $email, $motdepasse, $classe) {
     if (empty($numeroEtudiant)) {
         $numeroEtudiant = generate_etudiant_number();
@@ -22,6 +28,16 @@ function ajouterEtudiant($numeroEtudiant, $prenom, $nom, $email, $motdepasse, $c
         'etudiant'
     );
     return $etudiant;
+}
+function modifierEtudiant($id, $prenom, $nom, $email, $classe, $motdepasse) {
+    $result = modifierUtilisateur($id, [
+        'prenom' => $prenom,
+        'nom' => $nom,
+        'email' => $email,
+        'classe' => $classe,
+        'mot_de_passe' => $motdepasse
+    ]);
+    return $result;
 }
 
 function generate_etudiant_number() {

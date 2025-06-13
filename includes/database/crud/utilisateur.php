@@ -43,19 +43,31 @@ function ajouterUtilisateur(string $numero_etudiant, string $prenom, string $nom
  * @param string $motdepasse Mot de passe de l'étudiant
  * @return bool True si la modification a réussi, false sinon
  */
-function modifierUtilisateur(int $id, string $prenom, string $nom, string $email, string $motdepasse, string $classe): bool {
+function modifierUtilisateur(int $id, array $data): bool {
     $db = connectToDB();
+
+    $allowedFields = ['email', 'mot_de_passe', 'role', 'nom', 'prenom', 'classe'];
+    $updates = [];
+    $params = [':id' => $id];
+
+    foreach ($data as $key => $value) {
+        if (in_array($key, $allowedFields) && $value !== null) {
+            if ($key === 'mot_de_passe') {
+                $updates[] = "$key = :$key";
+                $params[":$key"] = password_hash($value, PASSWORD_DEFAULT);
+            } else {
+                $updates[] = "$key = :$key";
+                $params[":$key"] = $value;
+            }
+        }
+    }
+
+    if (empty($updates)) return false;
+    
     try {
-        $sql = "UPDATE utilisateurs SET prenom = :prenom, nom = :nom, email = :email, mot_de_passe = :mot_de_passe, classe = :classe WHERE id = :id AND role = 'etudiant'";
+        $sql = "UPDATE utilisateurs SET " . implode(', ', $updates) . " WHERE id = :id";
         $stmt = $db->prepare($sql);
-        return $stmt->execute([
-            ':prenom' => $prenom,
-            ':nom' => $nom,
-            ':email' => $email,
-            ':mot_de_passe' => password_hash($motdepasse, PASSWORD_DEFAULT),
-            ':classe' => $classe,
-            ':id' => $id
-        ]);
+        return $stmt->execute($params);
     } catch (PDOException $e) {
         error_log("Erreur lors de la modification de l'étudiant: " . $e->getMessage());
         return false;

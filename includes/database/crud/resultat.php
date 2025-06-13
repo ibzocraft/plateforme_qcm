@@ -75,3 +75,23 @@ function recupererResultatParId(int $id): array|false {
         return false;
     }
 } 
+
+
+function recupererDerniersResultats(int $limit = 5): array|false {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT resultats.*, utilisateurs.nom, utilisateurs.prenom, qcms.titre 
+                FROM resultats 
+                JOIN utilisateurs ON resultats.utilisateur_id = utilisateurs.id 
+                JOIN qcms ON resultats.qcm_id = qcms.id 
+                ORDER BY resultats.date_passe DESC 
+                LIMIT :limit";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':limit', $limit, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('Erreur lors de la récupération des résultats: ' . $e->getMessage());
+        return false;
+    }
+}

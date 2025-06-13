@@ -7,12 +7,14 @@ function redirect($url, $status_code = 301) {
 
 function redirect_with_success($url, $success, $status_code = 301) {
     $success = urlencode($success);
-    header("Location: $url?success=$success", true, $status_code);
+    $queryStarterSign = strpos($url, '?') !== false ? '&' : '?';
+    header("Location: $url".$queryStarterSign."success=$success", true, $status_code);
     exit();
 }
 function redirect_with_error($url, $error, $status_code = 301) {
     $error = urlencode($error);
-    header("Location: $url?error=$error", true, $status_code);
+    $queryStarterSign = strpos($url, '?') !== false ? '&' : '?';
+    header("Location: $url".$queryStarterSign."error=$error", true, $status_code);
     exit();
 }
 

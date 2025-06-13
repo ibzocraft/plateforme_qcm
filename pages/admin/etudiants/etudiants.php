@@ -55,7 +55,7 @@ $etudiants = get_etudiants();
                                     <td name="classe"><?= htmlspecialchars($etudiant['classe']) ?></td>
                                     <td class="">
                                         <a href="#" class="btn btn-primary btn-sm rounded btn-icon"><i class="bi bi-eye"></i></a>
-                                        <a href="#" class="btn btn-warning btn-sm rounded btn-icon"><i class="bi bi-pencil-square"></i></a>
+                                        <a href="<?= echo_full_url("pages/admin/etudiants/edit-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-warning btn-sm rounded btn-icon"><i class="bi bi-pencil-square"></i></a>
                                         <a href="#" class="btn btn-danger btn-sm rounded btn-icon"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
@@ -174,6 +174,7 @@ $etudiants = get_etudiants();
   </div>
 </div>
 <!-- /MODAL AJOUT ETUDIANT -->
+
 
 <!-- JAVASCRIPT -->
 <script>
