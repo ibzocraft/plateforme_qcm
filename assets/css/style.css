@@ -24,3 +24,35 @@
         background-color: #FAFAFA !important;
     }
 }
+
+/* #60758a */
+
+.table th, .table td {
+    white-space: nowrap;
+    vertical-align: middle !important;
+}
+.table td {
+  height: 72px;
+}
+
+.pagination .page-item .page-link {
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 2px;
+    color: #111418;
+    border: none;
+}
+.pagination .page-item.active .page-link {
+    background-color: #f0f2f5;
+    font-weight: bold;
+}
+.pagination .page-item:not(.active) .page-link:hover {
+    background-color: #f0f2f5;
+}
+.pagination .page-item.disabled .page-link {
+    background-color: transparent;
+}

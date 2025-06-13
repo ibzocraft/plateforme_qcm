@@ -12,7 +12,7 @@ require_once __DIR__ . '/../../includes/services/core/functions.php';
 </div>
 <div class="d-flex flex-grow-1 justify-content-end gap-4">
 <div class="d-flex align-items-center gap-4">
-    <a class="text-dark small fw-medium text-decoration-none" href="#">Dashboard</a>
+    <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/dashboard.php"); ?>">Dashboard</a>
     <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/qcms/qcms.php"); ?>">QCMs</a>
     <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/etudiants/etudiants.php"); ?>">Etudiants</a>
 </div>
