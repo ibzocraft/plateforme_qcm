@@ -23,12 +23,11 @@ require_once __DIR__ . '/../../includes/services/core/functions.php';
   <img
   role="button"
   class="rounded-circle object-fit-contain ms-3"
-  src="https://lh3.googleusercontent.com/aida-public/AB6AXuDUSLigwRMbxlzRau5QImldDAUYmswXjo9VAz3_9m3mlmH_VPAS9kxPPrl4k5ISUp-Zob-ur_32hxkgMMm1MRzlouxsNoztgjv9lF_bYDTToPQarmeKNFvWHgLHzngb1XxQl1oAUDClFHXOwRr7oUIl6_zSq9DIbwmrAKPhb6AkiXZWjmJE7ZU9g8hBP88vFaxR0pj0XmDRG_I5OPGmCllrHWRQUqWtE8GefS43xnbSX25RDP3xloZOFBa-qjdUh4IDDdxrF0ltQfWs" alt="avatar" class="rounded-circle" style="width: 2.5rem; height: 2.5rem; background-size: cover; background-position: center;"
+  src="<?php echo_full_url("/assets/images/profile-pic.png") ?>" alt="avatar" class="rounded-circle" style="width: 2.5rem; height: 2.5rem; background-size: cover; background-position: center;"
   data-bs-toggle="dropdown" aria-expanded="false"
   >
   <ul class="dropdown-menu pb-1">
-    <li><a class="dropdown-item" href="#">Mon Profil</a></li>
-    <li><a class="dropdown-item" href="#">Another action</a></li>
+    <li><a class="dropdown-item" href="<?php echo get_full_url("pages/admin/profil.php"); ?>">Mon Profil</a></li>
     <li><hr class="dropdown-divider mt-1 mb-1"></li>
     <li>
         <a class="dropdown-item text-danger small fw-bold" href="<?php echo get_full_url("includes/api/auth.php?logout"); ?>">

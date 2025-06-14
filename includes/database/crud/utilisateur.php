@@ -171,3 +171,68 @@ function recupererDernierIdUtilisateur() {
         return false;
     }
 }
+
+function countUtilisateursParRole(string $role): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM utilisateurs WHERE role = :role";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([':role' => $role]);
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log("Erreur lors du comptage des utilisateurs: " . $e->getMessage());
+        return 0;
+    }
+}
+
+function getNouveauxInscritsParMois(int $nb_mois = 6): array {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT DATE_FORMAT(date_inscription, '%Y-%m') as mois, COUNT(*) as count 
+                FROM utilisateurs 
+                WHERE role = 'etudiant' AND date_inscription >= CURDATE() - INTERVAL :nb_mois MONTH 
+                GROUP BY mois 
+                ORDER BY mois ASC";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':nb_mois', $nb_mois, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('Erreur lors de la récupération des nouveaux inscrits: ' . $e->getMessage());
+        return [];
+    }
+}
+
+function getRepartionEtudiantsParClasse(): array {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT classe, COUNT(*) as count 
+                FROM utilisateurs 
+                WHERE role = 'etudiant' AND classe IS NOT NULL
+                GROUP BY classe";
+        $stmt = $db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('Erreur lors de la récupération de la répartition par classe: ' . $e->getMessage());
+        return [];
+    }
+}
+
+function countNouveauxUtilisateursEntreJours(string $role, int $debut_jours_avant, int $fin_jours_avant): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM utilisateurs 
+                WHERE role = :role AND date_inscription >= CURDATE() - INTERVAL :debut_jours_avant DAY 
+                AND date_inscription < CURDATE() - INTERVAL (:fin_jours_avant - 1) DAY";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':role' => $role,
+            ':debut_jours_avant' => $debut_jours_avant,
+            ':fin_jours_avant' => $fin_jours_avant
+        ]);
+        return (int)$stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log("Erreur lors du comptage des nouveaux utilisateurs: " . $e->getMessage());
+        return 0;
+    }
+}

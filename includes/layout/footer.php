@@ -1,3 +1,7 @@
+<?php
+// Vide pour le moment
+?>
+
 <footer class="py-4 border-top">
     <div class="container" style="max-width: 70vw; padding-top: 1rem;">
         <ul class="nav justify-content-center mb-3 justify-content-around">

@@ -187,17 +187,18 @@
                 <td class="text-custom-dark"><?= $resultat['titre'] ?></td>
                 <td class="course-col-progress">
                   <div class="d-flex align-items-center gap-3">
-                    <div class="progress custom-progress" role="progressbar" aria-label="Course progress" aria-valuenow="<?= $resultat['score'] ?>" aria-valuemin="0" aria-valuemax="100">
-                      <div class="progress-bar" style="width: <?= $resultat['score'] ?>%;"></div>
+                    <?php $score_percent = ($resultat['score'] / 20) * 100; ?>
+                    <div class="progress custom-progress" role="progressbar" aria-label="Course progress" aria-valuenow="<?= $score_percent ?>" aria-valuemin="0" aria-valuemax="100">
+                      <div class="progress-bar" style="width: <?= $score_percent ?>%;"></div>
                     </div>
-                    <p class="text-custom-dark fw-medium mb-0"><?= intval($resultat['score']) ?>%</p>
+                    <p class="text-custom-dark fw-medium mb-0"><?= number_format($resultat['score'], 2) ?>/20</p>
                   </div>
                 </td>
                 <td class="mcq-col-date text-custom-secondary"><?= $resultat['date_passe'] ?></td>
                 <td class="course-col-status">
-                  <button class="btn btn-status rounded-pill w-100">
+                  <a href="<?= echo_full_url('pages/admin/qcms/detail-qcm.php?id=' . $resultat['qcm_id']) ?>" class="btn btn-status rounded-pill w-100 text-decoration-none">
                     <span class="text-truncate">Voir le QCM</span>
-                  </button>
+                  </a>
                 </td>
               </tr>
             <?php endforeach; ?>

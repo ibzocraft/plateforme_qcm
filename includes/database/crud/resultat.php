@@ -99,3 +99,85 @@ function recupererDerniersResultats(int $limit = 5): array|false {
         return false;
     }
 }
+
+function countResultats(): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM resultats";
+        $stmt = $db->query($sql);
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log('Erreur lors du comptage des résultats: ' . $e->getMessage());
+        return 0;
+    }
+}
+
+function getAverageScore(): float {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT AVG(score) FROM resultats";
+        $stmt = $db->query($sql);
+        return $stmt->fetchColumn() ?: 0.0;
+    } catch (PDOException $e) {
+        error_log('Erreur lors du calcul du score moyen: ' . $e->getMessage());
+        return 0.0;
+    }
+}
+
+function getActiviteQcmParJour(int $nb_jours = 7): array {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT DATE(date_passe) as jour, COUNT(*) as count 
+                FROM resultats 
+                WHERE date_passe >= CURDATE() - INTERVAL :nb_jours DAY 
+                GROUP BY jour 
+                ORDER BY jour ASC";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':nb_jours', $nb_jours, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } catch (PDOException $e) {
+        error_log('Erreur lors de la récupération de l\'activité QCM: ' . $e->getMessage());
+        return [];
+    }
+}
+
+function countParticipationsEntreJours(int $debut_jours_avant, int $fin_jours_avant): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM resultats 
+                WHERE date_passe >= CURDATE() - INTERVAL :debut_jours_avant DAY 
+                AND date_passe < CURDATE() - INTERVAL (:fin_jours_avant - 1) DAY";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':debut_jours_avant' => $debut_jours_avant,
+            ':fin_jours_avant' => $fin_jours_avant
+        ]);
+        return (int)$stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log("Erreur lors du comptage des participations: " . $e->getMessage());
+        return 0;
+    }
+}
+
+function getAverageScoreEntreJours(int $debut_jours_avant, int $fin_jours_avant): float {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT AVG(score) FROM resultats 
+                WHERE date_passe >= CURDATE() - INTERVAL :debut_jours_avant DAY 
+                AND date_passe < CURDATE() - INTERVAL (:fin_jours_avant - 1) DAY";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':debut_jours_avant' => $debut_jours_avant,
+            ':fin_jours_avant' => $fin_jours_avant
+        ]);
+        $avg_score = $stmt->fetchColumn() ?: 0.0;
+        
+        // The score is out of 100 in the DB, so we convert it to be out of 20
+        return ($avg_score / 100) * 20;
+
+    } catch (PDOException $e) {
+        error_log("Erreur lors du calcul du score moyen: " . $e->getMessage());
+        return 0.0;
+    }
+}

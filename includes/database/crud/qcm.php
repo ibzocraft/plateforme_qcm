@@ -73,4 +73,34 @@ function recupererQcmParId(int $id): array|false {
         error_log('Erreur lors de la récupération du QCM: ' . $e->getMessage());
         return false;
     }
+}
+
+function countQcms(): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM qcms";
+        $stmt = $db->query($sql);
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log('Erreur lors du comptage des QCMs: ' . $e->getMessage());
+        return 0;
+    }
+}
+
+function countQcmsCreesEntreJours(int $debut_jours_avant, int $fin_jours_avant): int {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT COUNT(*) FROM qcms 
+                WHERE date_creation >= CURDATE() - INTERVAL :debut_jours_avant DAY 
+                AND date_creation < CURDATE() - INTERVAL (:fin_jours_avant - 1) DAY";
+        $stmt = $db->prepare($sql);
+        $stmt->execute([
+            ':debut_jours_avant' => $debut_jours_avant,
+            ':fin_jours_avant' => $fin_jours_avant
+        ]);
+        return (int)$stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log("Erreur lors du comptage des QCMs créés: " . $e->getMessage());
+        return 0;
+    }
 } 
