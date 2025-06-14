@@ -160,3 +160,14 @@ function recupererUtilisateurParEmail(string $email): array|false {
     }
 }
 
+function recupererDernierIdUtilisateur() {
+    $db = connectToDB();
+    try {
+        $sql = "SELECT MAX(id) FROM utilisateurs";
+        $stmt = $db->query($sql);
+        return $stmt->fetchColumn();
+    } catch (PDOException $e) {
+        error_log("Erreur lors de la récupération de l'utilisateur par email: " . $e->getMessage());
+        return false;
+    }
+}

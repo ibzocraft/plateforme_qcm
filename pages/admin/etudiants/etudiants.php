@@ -54,9 +54,9 @@ $etudiants = get_etudiants();
                                     <td class="text-secondary" name="email"><?= htmlspecialchars($etudiant['email']) ?></td>
                                     <td name="classe"><?= htmlspecialchars($etudiant['classe']) ?></td>
                                     <td class="">
-                                        <a href="#" class="btn btn-primary btn-sm rounded btn-icon"><i class="bi bi-eye"></i></a>
+                                        <a href="<?= echo_full_url("pages/admin/etudiants/detail-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-primary btn-sm rounded btn-icon"><i class="bi bi-eye"></i></a>
                                         <a href="<?= echo_full_url("pages/admin/etudiants/edit-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-warning btn-sm rounded btn-icon"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="#" class="btn btn-danger btn-sm rounded btn-icon"><i class="bi bi-trash"></i></a>
+                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm rounded btn-icon" data-bs-toggle="modal" data-bs-target="#deleteEtudiantModal" data-id="<?= $etudiant['id'] ?>"><i class="bi bi-trash"></i></a>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
@@ -175,6 +175,29 @@ $etudiants = get_etudiants();
 </div>
 <!-- /MODAL AJOUT ETUDIANT -->
 
+<!-- MODAL SUPPRESSION ETUDIANT -->
+<div class="modal fade" id="deleteEtudiantModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm">
+    <div class="modal-content">
+        <form action="<?= echo_full_url("includes/api/etudiant.php?delete") ?>" method="post">
+            <input type="hidden" name="id" id="deleteEtudiantIdInput">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5">Supprimer un étudiant</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Voulez-vous vraiment supprimer l'étudiant <strong id="etudiantNameToDelete"></strong>&nbsp;?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                <button type="submit" class="btn btn-danger">Supprimer</button>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
+<!-- /MODAL SUPPRESSION ETUDIANT -->
+
 
 <!-- JAVASCRIPT -->
 <script>
@@ -193,6 +216,20 @@ $etudiants = get_etudiants();
             }
         });
     });
+
+    const deleteEtudiantModal = document.getElementById('deleteEtudiantModal')
+    deleteEtudiantModal.addEventListener('show.bs.modal', event => {
+        const button = event.relatedTarget
+        const etudiantId = button.getAttribute('data-id')
+        
+        const nomComplet = button.closest('tr').querySelector('td[name="nom_complet"]').textContent;
+
+        const modalName = deleteEtudiantModal.querySelector('#etudiantNameToDelete')
+        const modalInput = deleteEtudiantModal.querySelector('#deleteEtudiantIdInput')
+
+        modalName.textContent = nomComplet
+        modalInput.value = etudiantId
+    })
 </script>
 <!-- /JAVASCRIPT -->
 

@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../database/crud/utilisateur.php';
+require_once __DIR__ . '/../../database/crud/resultat.php';
 require_once __DIR__ . '/../../services/core/functions.php';
 
 function get_etudiants() {
@@ -40,8 +41,21 @@ function modifierEtudiant($id, $prenom, $nom, $email, $classe, $motdepasse) {
     return $result;
 }
 
-function generate_etudiant_number() {
-    $nEtudiants = count(recupererUtilisateursParRole('etudiant'));
-    $nEtudiants++;
-    return 'ETU' . str_pad($nEtudiants, 3, '0', STR_PAD_LEFT);
+function recupererResultatsEtudiant($etudiant_id) {
+    $etudiant_id = intval($etudiant_id);
+    $resultats = recupererResultatsParUtilisateur($etudiant_id);
+    return $resultats;
 }
+
+function supprimerEtudiant($id) {
+    $id = intval($id);
+    $success = supprimerUtilisateur($id);
+    return $success;
+}
+
+function generate_etudiant_number() {
+    $lastId = recupererDernierIdUtilisateur();
+    $newId = intval($lastId) + 1;
+    return 'ETU' . str_pad($newId, 3, '0', STR_PAD_LEFT);
+}
+

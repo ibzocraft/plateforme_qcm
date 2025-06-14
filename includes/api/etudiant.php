@@ -47,6 +47,18 @@ if (isset($_GET['edit'])) {
     }
 }
 
+// delete
+if (isset($_GET['delete'])) {
+    $id = intval($_POST['id']);
+    $success = supprimerEtudiant($id);
+
+    if ($success) {
+        redirect_with_success($_SERVER['HTTP_REFERER'], "L'étudiant a été supprimé avec succès");
+    } else {
+        redirect_with_error($_SERVER['HTTP_REFERER'], "Erreur lors de la suppression de l'étudiant");
+    }
+}
+
 // logout
 if (isset($_GET['logout'])) {
     logout();

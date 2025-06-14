@@ -52,7 +52,11 @@ function supprimerResultat(int $id): bool {
 function recupererResultatsParUtilisateur(int $utilisateur_id): array|false {
     $db = connectToDB();
     try {
-        $sql = "SELECT * FROM resultats WHERE utilisateur_id = :utilisateur_id ORDER BY date_passe DESC";
+        $sql = "SELECT resultats.*, qcms.titre FROM resultats 
+        JOIN qcms ON resultats.qcm_id = qcms.id 
+        WHERE resultats.utilisateur_id = :utilisateur_id 
+        ORDER BY resultats.date_passe DESC";
+        
         $stmt = $db->prepare($sql);
         $stmt->execute([':utilisateur_id' => $utilisateur_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

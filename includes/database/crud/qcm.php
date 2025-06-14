@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../db.php';
 
 // Créer un QCM
-function creerQcm(string $titre, string $description = null): int|false {
+function creerQcm(string $titre, string $description = ""): int|false {
     $db = connectToDB();
     try {
         $sql = "INSERT INTO qcms (titre, description) VALUES (:titre, :description)";
@@ -19,7 +19,7 @@ function creerQcm(string $titre, string $description = null): int|false {
 }
 
 // Modifier un QCM
-function modifierQcm(int $id, string $titre, string $description = null): bool {
+function modifierQcm(int $id, string $titre, string $description = ""): bool {
     $db = connectToDB();
     try {
         $sql = "UPDATE qcms SET titre = :titre, description = :description WHERE id = :id";
