@@ -19,7 +19,8 @@ CREATE TABLE utilisateurs (
 CREATE TABLE qcms (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titre VARCHAR(255) NOT NULL,
-    description TEXT
+    description TEXT,
+    date_creation TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
 -- Table questions
