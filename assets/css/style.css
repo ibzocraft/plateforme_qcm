@@ -18,6 +18,15 @@
         background-color: #161b22 !important;
     }
 
+    .pagination .page-item .page-link {
+        color: #f0f2f5 !important;
+    }
+    .pagination .page-item.active .page-link {
+        background-color: #161b22 !important;
+    }
+    .pagination .page-item:not(.active) .page-link:hover {
+        background-color: #161b22 !important;
+    }
 }
 
 [data-bs-theme="light"] {

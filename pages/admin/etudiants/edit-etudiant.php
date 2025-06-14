@@ -96,6 +96,6 @@ $etudiant = get_etudiant_by_id($_GET['id']);
 
 
 <!-- FIN PAGE -->
-<?php include_once __DIR__ . '/../../../includes/layout/footer.php'; ?>
+<?php include_once __DIR__ . '/../../../includes/layout/footer_admin.php'; ?>
 <?php end_page() ?>
 <!-- /FIN PAGE -->

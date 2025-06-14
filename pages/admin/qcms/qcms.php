@@ -16,55 +16,61 @@
 
 
 <!-- CONTENU DE LA PAGE -->
-<div class="container-fluid p-4 mb-5">
-    
-    <div class="row p-4">
-        <div class="col-8">
-            <p class="text-custom-dark tracking-light fs-2 fw-bold leading-tight min-w-72">Gestion des QCMs</p>
+<div class="container-lg py-5">
+    <div class="d-flex flex-column">
+        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 p-4">
+            <h2 class="text-dark fw-bold lh-tight m-0">Gestion des QCMs</h2>
+            <button class="btn border" data-bs-toggle="modal" data-bs-target="#addQcmModal">
+                <span class="truncate">Ajouter un QCM</span>
+            </button>
         </div>
-
-        <div class="col-4 text-end">
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addQcmModal">Ajouter un QCM</button>
+        <div class="px-4 py-3">
+            <div class="input-group flex-nowrap">
+                <span class="input-group-text bg-theme border-end-0"><i class="bi bi-search text-dark"></i></span>
+                <input type="text" id="searchQcm" class="form-control bg-theme border-start-0" placeholder="Rechercher des QCMs par titre ou description..." aria-label="Search QCM" aria-describedby="addon-wrapping">
+            </div>
         </div>
-    </div>
-
-    <div class="bg-theme p-4 rounded-4">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Titre</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php if ($qcms): ?>
-                    <?php foreach ($qcms as $qcm): ?>
+        <div class="px-4 py-3">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
                         <tr>
-                            <th scope="row"><?php echo $qcm['id']; ?></th>
-                            <td><?php echo $qcm['titre']; ?></td>
-                            <td><?php echo $qcm['description']; ?></td>
-                            <td>
-                                <a href="<?php echo get_full_url('pages/admin/qcms/detail-qcm.php?id=' . $qcm['id']); ?>" class="btn btn-sm btn-info">Détails</a>
-                                <button type="button" class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editQcmModal" data-qcm-id="<?php echo $qcm['id']; ?>" data-qcm-titre="<?php echo htmlspecialchars($qcm['titre']); ?>" data-qcm-description="<?php echo htmlspecialchars($qcm['description']); ?>">
-                                    Modifier
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQcmModal" data-qcm-id="<?php echo $qcm['id']; ?>" data-qcm-titre="<?php echo htmlspecialchars($qcm['titre']); ?>">
-                                    Supprimer
-                                </button>
-                            </td>
+                            <th scope="col" class="text-dark fw-semibold" style="width: 10%;">ID</th>
+                            <th scope="col" class="text-dark fw-semibold" style="width: 30%;">Titre</th>
+                            <th scope="col" class="text-dark fw-semibold" style="width: 40%;">Description</th>
+                            <th scope="col" class="text-secondary fw-semibold" style="width: 20%;">Actions</th>
                         </tr>
-                    <?php endforeach; ?>
-                <?php else: ?>
-                    <tr>
-                        <td colspan="4" class="text-center">Aucun QCM trouvé.</td>
-                    </tr>
-                <?php endif; ?>
-            </tbody>
-        </table>
+                    </thead>
+                    <tbody>
+                        <?php if ($qcms): ?>
+                            <?php foreach ($qcms as $qcm): ?>
+                                <tr>
+                                    <th scope="row" class="fw-semibold" name="qcm_id"><?php echo $qcm['id']; ?></th>
+                                    <td name="qcm_titre"><?php echo $qcm['titre']; ?></td>
+                                    <td class="text-secondary" name="qcm_description"><?php echo $qcm['description']; ?></td>
+                                    <td>
+                                        <a href="<?php echo get_full_url('pages/admin/qcms/detail-qcm.php?id=' . $qcm['id']); ?>" class="btn btn-sm btn-primary btn-icon">
+                                            <i class="bi bi-eye"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-warning btn-icon" data-bs-toggle="modal" data-bs-target="#editQcmModal" data-qcm-id="<?php echo $qcm['id']; ?>" data-qcm-titre="<?php echo htmlspecialchars($qcm['titre']); ?>" data-qcm-description="<?php echo htmlspecialchars($qcm['description']); ?>">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-danger btn-icon" data-bs-toggle="modal" data-bs-target="#deleteQcmModal" data-qcm-id="<?php echo $qcm['id']; ?>" data-qcm-titre="<?php echo htmlspecialchars($qcm['titre']); ?>">
+                                            <i class="bi bi-trash"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="4" class="text-center">Aucun QCM trouvé.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-
 </div>
 <!-- /CONTENU DE LA PAGE -->
 
@@ -160,6 +166,28 @@
 
 
 <script>
+    // Live search for QCMs
+    document.getElementById('searchQcm').addEventListener('input', function() {
+        const searchValue = this.value.toLowerCase();
+        const rows = document.querySelectorAll('tbody tr');
+        rows.forEach(row => {
+            // Ensure the row has the cells before trying to access them
+            const titreCell = row.querySelector('td[name="qcm_titre"]');
+            const descriptionCell = row.querySelector('td[name="qcm_description"]');
+            
+            if (titreCell && descriptionCell) {
+                const titre = titreCell.textContent.toLowerCase();
+                const description = descriptionCell.textContent.toLowerCase();
+                
+                if (titre.includes(searchValue) || description.includes(searchValue)) {
+                    row.style.display = 'table-row';
+                } else {
+                    row.style.display = 'none';
+                }
+            }
+        });
+    });
+
     const editQcmModal = document.getElementById('editQcmModal');
     editQcmModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget;
@@ -193,6 +221,7 @@
 </script>
 
 <!-- FIN PAGE -->
-<?php include_once __DIR__ . '/../../../includes/layout/footer.php'; ?>
+<?php include_once __DIR__ . '/../../../includes/layout/footer_admin.php'; ?>
 <?php end_page(); ?>
+
 <!-- /FIN PAGE -->

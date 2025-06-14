@@ -286,7 +286,7 @@
     </div>
 </div>
 
-<?php include_once __DIR__ . '/../includes/layout/footer.php'; ?>
+<?php include_once __DIR__ . '/../includes/layout/footer_student.php'; ?>
 
 <!-- FIN PAGE -->
 <?php end_page() ?>
