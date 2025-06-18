@@ -83,7 +83,7 @@
 <!-- /CONTENU DE LA PAGE -->
 
 <!-- FIN PAGE -->
-<?php include_once __DIR__ . '/../../includes/layout/footer_student.php'; ?>
+<?php include_once __DIR__ . '/../../includes/layout/footer.php'; ?>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {

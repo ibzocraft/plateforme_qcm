@@ -114,10 +114,10 @@
                     </h2>
                 </div>
                 <div class="d-flex flex-wrap gap-3">
-                    <button class="btn btn-custom-1 rounded-pill px-4">
+                    <button class="btn btn-custom-1 rounded-pill px-4" onclick="window.location.href='<?= get_full_url("/pages/auth/inscription.php") ?>'">
                         <span class="text-truncate">Commencer</span>
                     </button>
-                    <button class="btn btn-custom-2 rounded-pill px-4">
+                    <button class="btn btn-custom-2 rounded-pill px-4" onclick="window.location.href='<?= get_full_url("/pages/a-propos.php") ?>'">
                         <span class="text-truncate">En savoir plus</span>
                     </button>
                 </div>
@@ -278,7 +278,7 @@
                 </p>
             </div>
             <div class="d-grid gap-2 col-8 col-md-6 col-lg-4 mx-auto">
-                <button class="btn btn-custom-1 rounded-pill px-4">
+                <button class="btn btn-custom-1 rounded-pill px-4" onclick="window.location.href='<?= get_full_url("/pages/auth/inscription.php") ?>'">
                     <span class="text-truncate">Commencer</span>
                 </button>
             </div>
@@ -286,7 +286,7 @@
     </div>
 </div>
 
-<?php include_once __DIR__ . '/../includes/layout/footer_student.php'; ?>
+<?php include_once __DIR__ . '/../includes/layout/footer.php'; ?>
 
 <!-- FIN PAGE -->
 <?php end_page() ?>
