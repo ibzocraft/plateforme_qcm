@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../includes/services/utils/path.php';
 require_once __DIR__ . '/../../includes/services/core/functions.php';
 ?>
 
-<header class="d-flex align-items-center justify-content-between border-bottom px-4 py-2">
+<header class="d-flex align-items-center justify-content-between border-bottom px-4 py-2 mx-3 mt-3 rounded-4 bg-theme position-sticky top-0" style="z-index: 500;">
 <div class="d-flex align-items-center gap-2">
 <div style="width: 1.5rem; height: 1.5rem;">
     <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M44 4H30.6666V17.3334H17.3334V30.6666H4V44H44V4Z" fill="currentColor"></path></svg>
@@ -12,6 +12,7 @@ require_once __DIR__ . '/../../includes/services/core/functions.php';
 </div>
 <div class="d-flex flex-grow-1 justify-content-end gap-4">
 <div class="d-flex align-items-center gap-4">
+    <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/accueil.php"); ?>">Accueil</a>
     <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/dashboard.php"); ?>">Dashboard</a>
     <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/qcms/qcms.php"); ?>">QCMs</a>
     <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/admin/etudiants/etudiants.php"); ?>">Etudiants</a>
@@ -39,3 +40,20 @@ require_once __DIR__ . '/../../includes/services/core/functions.php';
 </div>
 </div>
 </header>
+
+<style>
+    header {
+        transition: all 0.5s ease;
+    }
+</style>
+<script>
+window.addEventListener('scroll', function() {
+    const header = document.querySelector('header');
+    if (window.scrollY > 0) {
+        header.classList.remove('mx-3', 'rounded-4');
+    } else {
+        header.classList.add('mx-3', 'rounded-4');
+        
+    }
+});
+</script>

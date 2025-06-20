@@ -2,6 +2,8 @@
 require_once __DIR__ . '/../../../includes/layout/page.php';
 require_once __DIR__ . '/../../../includes/services/utils/records.php';
 require_once __DIR__ . '/../../../includes/services/etudiant/etudiant.service.php';
+require_once __DIR__ . '/../../../includes/elements/crud-module-header.php';
+
 
 // if (!is_authenticated()) redirect("./auth/connection.php");
 
@@ -17,91 +19,96 @@ $etudiants = get_etudiants();
 
 <!-- CONTENU DE LA PAGE -->
 
-<div class="container-lg py-5">
-    <div class="d-flex flex-column">
-        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 p-4">
-            <h2 class="text-dark fw-bold lh-tight m-0">Étudiants</h2>
-            <button class="btn border" data-bs-toggle="modal" data-bs-target="#addEtudiantModal">
-                <span class="truncate">Ajouter un étudiant</span>
-            </button>
-        </div>
-        <div class="px-4 py-3">
-            <div class="input-group flex-nowrap">
-                <span class="input-group-text bg-theme border-end-0"><i class="bi bi-search text-dark"></i></span>
-                <input type="text" id="searchEtudiant" class="form-control bg-theme border-start-0" placeholder="Rechercher des étudiants par numéro, nom, email ou classe..." aria-label="Username" aria-describedby="addon-wrapping">
+<div class="container-fluid p-4">
+    <!-- HEADER -->
+    <?php crud_module_header(
+        "Gestion des étudiants",
+        "Gérez les étudiants de votre plateforme.",
+        "Ajouter un étudiant",
+        "#addEtudiantModal"
+    ); ?>
+    <!-- /HEADER -->
+
+    <div class="bg-theme rounded-4 p-3 overflow-hidden">
+        <div class="d-flex flex-column">
+            <div class="px-4 py-3 spawn-slide-down">
+                <div class="input-group flex-nowrap">
+                    <span class="input-group-text bg-theme-accent border-end-0"><i class="bi bi-search text-dark"></i></span>
+                    <input type="text" id="searchEtudiant" class="form-control bg-theme-accent border-start-0" placeholder="Rechercher des étudiants par numéro, nom, email ou classe..." aria-label="Username" aria-describedby="addon-wrapping">
+                </div>
             </div>
-        </div>
-        <div class="px-4 py-3">
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th class="text-dark fw-semibold" style="width: 10%;">Numéro</th>
-                            <th class="text-dark fw-semibold" style="width: 30%;">Nom Complet</th>
-                            <th class="text-dark fw-semibold" style="width: 30%;">Email</th>
-                            <th class="text-dark fw-semibold" style="width: 20%;">Classe</th>
-                            <th class="text-secondary fw-semibold" style="width: 10%;">
-                                Actions
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php if (count($etudiants) > 0): ?>
-                            <?php foreach ($etudiants as $etudiant): ?>
-                                <tr>
-                                    <td class="fw-semibold" name="numero_etudiant"><?= htmlspecialchars($etudiant['numero_etudiant']) ?></td>
-                                    <td name="nom_complet"><?= htmlspecialchars($etudiant['prenom']) . ' ' . htmlspecialchars($etudiant['nom']) ?></td>
-                                    <td class="text-secondary" name="email"><?= htmlspecialchars($etudiant['email']) ?></td>
-                                    <td name="classe"><?= htmlspecialchars($etudiant['classe']) ?></td>
-                                    <td class="">
-                                        <a href="<?= echo_full_url("pages/admin/etudiants/detail-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-primary btn-sm rounded btn-icon"><i class="bi bi-eye"></i></a>
-                                        <a href="<?= echo_full_url("pages/admin/etudiants/edit-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-warning btn-sm rounded btn-icon"><i class="bi bi-pencil-square"></i></a>
-                                        <a href="javascript:void(0)" class="btn btn-danger btn-sm rounded btn-icon" data-bs-toggle="modal" data-bs-target="#deleteEtudiantModal" data-id="<?= $etudiant['id'] ?>"><i class="bi bi-trash"></i></a>
-                                    </td>
-                                </tr>
-                            <?php endforeach; ?>
-                        <?php else: ?>
+            <div class="px-4 py-3 spawn-slide-up slow">
+                <div class="table-responsive bg-theme-accent rounded p-3">
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td colspan="4" class="text-center">Aucun étudiant trouvé.</td>
+                                <th class="text-dark fw-semibold" style="width: 10%;">Numéro</th>
+                                <th class="text-dark fw-semibold" style="width: 30%;">Nom Complet</th>
+                                <th class="text-dark fw-semibold" style="width: 30%;">Email</th>
+                                <th class="text-dark fw-semibold" style="width: 20%;">Classe</th>
+                                <th class="text-secondary fw-semibold" style="width: 10%;">
+                                    Actions
+                                </th>
                             </tr>
-                        <?php endif; ?>
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            <?php if (count($etudiants) > 0): ?>
+                                <?php foreach ($etudiants as $etudiant): ?>
+                                    <tr>
+                                        <td class="fw-semibold" name="numero_etudiant"><?= htmlspecialchars($etudiant['numero_etudiant']) ?></td>
+                                        <td name="nom_complet"><?= htmlspecialchars($etudiant['prenom']) . ' ' . htmlspecialchars($etudiant['nom']) ?></td>
+                                        <td class="text-secondary" name="email"><?= htmlspecialchars($etudiant['email']) ?></td>
+                                        <td name="classe"><?= htmlspecialchars($etudiant['classe']) ?></td>
+                                        <td class="">
+                                            <a href="<?= echo_full_url("pages/admin/etudiants/detail-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-primary btn-sm rounded btn-icon"><i class="bi bi-eye"></i></a>
+                                            <a href="<?= echo_full_url("pages/admin/etudiants/edit-etudiant.php?id=" . $etudiant['id']) ?>" class="btn btn-warning btn-sm rounded btn-icon"><i class="bi bi-pencil-square"></i></a>
+                                            <a href="javascript:void(0)" class="btn btn-danger btn-sm rounded btn-icon" data-bs-toggle="modal" data-bs-target="#deleteEtudiantModal" data-id="<?= $etudiant['id'] ?>"><i class="bi bi-trash"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="4" class="text-center">Aucun étudiant trouvé.</td>
+                                </tr>
+                            <?php endif; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
 
-        <!-- PAGINATION -->
-        <div class="d-flex align-items-center justify-content-center p-4">
-            <nav aria-label="Page navigation">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <a href="#" class="page-link">
-                            <div data-icon="CaretLeft" data-size="18px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
-                                </svg>
-                            </div>
-                        </a>
-                    </li>
-                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                    <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
-                    <li class="page-item"><a class="page-link" href="#">10</a></li>
-                    <li class="page-item">
-                        <a href="#" class="page-link">
-                            <div data-icon="CaretRight" data-size="18px" data-weight="regular">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
-                                    <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
-                                </svg>
-                            </div>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
-        <!-- /PAGINATION -->
+            <!-- PAGINATION -->
+            <!-- <div class="d-flex align-items-center justify-content-center p-4">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li class="page-item">
+                            <a href="#" class="page-link">
+                                <div data-icon="CaretLeft" data-size="18px" data-weight="regular">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path>
+                                    </svg>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item disabled"><a class="page-link" href="#">...</a></li>
+                        <li class="page-item"><a class="page-link" href="#">10</a></li>
+                        <li class="page-item">
+                            <a href="#" class="page-link">
+                                <div data-icon="CaretRight" data-size="18px" data-weight="regular">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" fill="currentColor" viewBox="0 0 256 256">
+                                        <path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path>
+                                    </svg>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div> -->
+            <!-- /PAGINATION -->
 
+        </div>
     </div>
 </div>
 
@@ -201,6 +208,7 @@ $etudiants = get_etudiants();
 
 <!-- JAVASCRIPT -->
 <script>
+    // Recherche Etudiant
     document.getElementById('searchEtudiant').addEventListener('input', function() {
         const searchValue = this.value.toLowerCase();
         const rows = document.querySelectorAll('tbody tr');
@@ -216,7 +224,9 @@ $etudiants = get_etudiants();
             }
         });
     });
+    // --
 
+    // Suppression Etudiant
     const deleteEtudiantModal = document.getElementById('deleteEtudiantModal')
     deleteEtudiantModal.addEventListener('show.bs.modal', event => {
         const button = event.relatedTarget
@@ -230,6 +240,7 @@ $etudiants = get_etudiants();
         modalName.textContent = nomComplet
         modalInput.value = etudiantId
     })
+    // --
 </script>
 <!-- /JAVASCRIPT -->
 

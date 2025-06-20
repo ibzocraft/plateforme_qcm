@@ -1,9 +1,8 @@
 <?php
-require_once __DIR__ . '/../../includes/services/core/auth.php';
+    require_once __DIR__ . '/../../includes/services/core/auth.php';
 
-$role = null;
-if (is_authenticated()) $role = get_authenticated_user()['role'];
-
+    $role = null;
+    if (is_authenticated()) $role = get_authenticated_user()['role'];
 ?>
 
 <footer class="py-4 border-top">
@@ -15,7 +14,7 @@ if (is_authenticated()) $role = get_authenticated_user()['role'];
                 <li class="nav-item"><a href="<?php echo get_full_url('pages/admin/etudiants/etudiants.php'); ?>" class="nav-link px-2 text-body-secondary">Étudiants</a></li>
                 <li class="nav-item"><a href="<?php echo get_full_url('pages/admin/profil.php'); ?>" class="nav-link px-2 text-body-secondary">Profil</a></li>
             <?php } ?>
-            <?php if ($role == 'student') { ?>
+            <?php if ($role == 'etudiant') { ?>
                 <li class="nav-item"><a href="<?php echo get_full_url('pages/portail/dashboard.php'); ?>" class="nav-link px-2 text-body-secondary">Dashboard</a></li>
                 <li class="nav-item"><a href="<?php echo get_full_url('pages/portail/qcms/qcms.php'); ?>" class="nav-link px-2 text-body-secondary">QCMs</a></li>
                 <li class="nav-item"><a href="<?php echo get_full_url('pages/portail/statistiques.php'); ?>" class="nav-link px-2 text-body-secondary">Statistiques</a></li>

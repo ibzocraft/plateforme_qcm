@@ -16,9 +16,9 @@ if (isset($_GET['login'])) {
     $user = login($email, $password);
     if ($user) {
         if ($user['role'] == 'admin')
-            redirect(get_full_url("pages/admin/dashboard.php"));
+            redirect_with_success(get_full_url("pages/admin/dashboard.php"), "Vous êtes connecté en tant qu'administrateur !");
         else
-            redirect(get_full_url("pages/portail/dashboard.php"));
+            redirect_with_success(get_full_url("pages/portail/dashboard.php"), "Vous êtes connecté en tant qu'étudiant !");
     } else {
         redirect_with_error(get_full_url("pages/auth/connection.php"), "Vos identifiants sont incorrects");
     }

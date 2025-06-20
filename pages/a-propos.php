@@ -61,7 +61,7 @@ require_once __DIR__ . '/../includes/services/utils/path.php';
 </style>
 
 <!-- Hero Section -->
-<div class="hero-section d-flex align-items-center justify-content-center text-center rounded-bottom-4"
+<div class="hero-section d-flex align-items-center justify-content-center text-center rounded-bottom-4 mx-4 mt-3 rounded-3"
      style='background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://images.unsplash.com/photo-1516321497487-e288fb19713f?q=80&w=2070&auto=format&fit=crop");'>
     <div class="p-5">
         <h1 class="hero-title">À propos de Questions</h1>

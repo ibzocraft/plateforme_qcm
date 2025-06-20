@@ -15,7 +15,11 @@
     }
 
     .bg-theme {
-        background-color: #161b22 !important;
+        background-color: #13171d !important;
+    }
+
+    .bg-theme-accent {
+        background-color: #0f1217 !important;
     }
 
     .pagination .page-item .page-link {
@@ -31,7 +35,11 @@
 
 [data-bs-theme="light"] {
     .bg-theme {
-        background-color: #FAFAFA !important;
+        background-color: #F7F7F7 !important;
+    }
+
+    .bg-theme-accent {
+        background-color: #FFFFFF !important;
     }
 }
 
@@ -66,5 +74,66 @@
 .pagination .page-item.disabled .page-link {
     background-color: transparent;
 }
+
+
+/* ANIMATIONS */
+@keyframes fade-in {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes slide-up {
+    0% { transform: translateY(25%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes slide-up-fade {
+    0% { transform: translateY(25%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes slide-down {
+    0% { transform: translateY(-100%); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+}
+@keyframes slide-left {
+    0% { transform: translateX(-50%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes slide-right {
+    0% { transform: translateX(50%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+}
+@keyframes pop-in {
+    0% { transform: scale(0); }
+    100% { transform: scale(1); }
+}
+
+.spawn-fade-in { animation: fade-in 1s ease; }
+.spawn-slide-up { &:not(.slow) { animation: slide-up 0.5s ease; } &.slow { animation: slide-up 1.5s ease; } }
+.spawn-slide-down { &:not(.slow) { animation: slide-down 1s ease; } &.slow { animation: slide-down 1.5s ease; } }
+.spawn-slide-left { &:not(.slow) { animation: slide-left 1s ease; } &.slow { animation: slide-left 1.5s ease; } }
+.spawn-slide-right { &:not(.slow) { animation: slide-right 1s ease; } &.slow { animation: slide-right 1.5s ease; } }
+.spawn-pop-in { animation: pop-in 0.5s ease; }
+.spawn-slide-up-fade { animation: slide-up-fade 1s ease; }
+
+.spawn-ladder-down {
+    :nth-child(1) { animation: slide-down 0.8s ease; }
+    :nth-child(2) { animation: slide-down 1.5s ease; }
+    :nth-child(3) { animation: slide-down 2s ease; }
+    :nth-child(4) { animation: slide-down 2.5s ease; }
+    :nth-child(5) { animation: slide-down 3s ease; }
+}
+.spawn-ladder-up {
+    :nth-child(1) { animation: slide-up 0.8s ease; }
+    :nth-child(2) { animation: slide-up 1.5s ease; }
+    :nth-child(3) { animation: slide-up 2s ease; }
+    :nth-child(4) { animation: slide-up 2.5s ease; }
+    :nth-child(5) { animation: slide-up 3s ease; }
+}
+/* /ANIMATIONS */
+
+
+
+
+
+
 
 

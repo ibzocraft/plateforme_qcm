@@ -4,6 +4,7 @@
     require_once __DIR__ . '/../../../includes/database/crud/qcm.php';
     require_once __DIR__ . '/../../../includes/database/crud/question.php';
     require_once __DIR__ . '/../../../includes/database/crud/reponse.php';
+    require_once __DIR__ . '/../../../includes/elements/module-header.php';
 
     if (!is_authenticated()) redirect(get_full_url("pages/auth/connection.php"));
     if (!is_admin()) redirect(get_full_url("pages/portail/dashboard.php"));
@@ -29,101 +30,99 @@
 
 <!-- CONTENU DE LA PAGE -->
 <div class="container-fluid p-4 mb-5">
-    
-    <div class="d-flex justify-content-between align-items-center p-4">
-        <div>
-            <h2 class="text-dark fw-bold lh-tight mt-3">
-                <span class="me-2"><a href="<?php echo get_full_url('pages/admin/qcms/qcms.php'); ?>" class="text-dark"><i class="bi bi-box-arrow-left"></i></a></span>
-                <?php echo htmlspecialchars($qcm['titre']); ?>
-            </h2>
-            <p class="text-secondary"><?php echo htmlspecialchars($qcm['description']); ?></p>
-        </div>
-    </div>
+    <!-- HEADER -->
+    <?php module_header(
+        $qcm['titre'],
+        $qcm['description']
+    ); ?>
+    <!-- /HEADER -->
 
-    <div class="row g-4 p-4">
-        <!-- Colonne des Questions -->
-        <div class="col-lg-7">
-            <div class="bg-theme p-4 rounded-4 h-100">
-                <h3 class="fs-4 fw-bold mb-4">Questions</h3>
-                <div class="accordion" id="questionsAccordion">
-                    <?php if ($questions): ?>
-                        <?php foreach ($questions as $index => $question): ?>
-                            <div class="accordion-item">
-                                <h2 class="accordion-header" id="heading<?php echo $question['id']; ?>">
-                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $question['id']; ?>" aria-expanded="false" aria-controls="collapse<?php echo $question['id']; ?>">
-                                        <?php echo htmlspecialchars($question['texte_question']); ?>
-                                    </button>
-                                </h2>
-                                <div id="collapse<?php echo $question['id']; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $question['id']; ?>" data-bs-parent="#questionsAccordion">
-                                    <div class="accordion-body">
-                                        <div class="d-flex justify-content-end mb-3">
-                                            <button type="button" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editQuestionModal" data-question-id="<?php echo $question['id']; ?>" data-question-texte="<?php echo htmlspecialchars($question['texte_question']); ?>">
-                                                <i class="bi bi-pencil-square"></i> Modifier
-                                            </button>
-                                            <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuestionModal" data-question-id="<?php echo $question['id']; ?>" data-question-texte="<?php echo htmlspecialchars($question['texte_question']); ?>">
-                                                <i class="bi bi-trash"></i> Supprimer
-                                            </button>
-                                        </div>
-                                        <h6 class="text-muted">Réponses</h6>
-                                        <?php $reponses = recupererReponsesParQuestion($question['id']); ?>
-                                        <ul class="list-group">
-                                            <?php if ($reponses): ?>
-                                                <?php foreach ($reponses as $reponse): ?>
-                                                    <li class="list-group-item d-flex justify-content-between align-items-center <?php echo $reponse['est_correcte'] ? 'list-group-item-success' : ''; ?>">
-                                                        <span>
-                                                            <?php echo htmlspecialchars($reponse['texte_reponse']); ?>
-                                                            <?php if ($reponse['est_correcte']): ?>
-                                                                <span class="badge bg-success rounded-pill ms-2">Correcte</span>
-                                                            <?php endif; ?>
-                                                        </span>
-                                                        <div>
-                                                            <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editReponseModal" data-reponse-id="<?php echo $reponse['id']; ?>" data-reponse-texte="<?php echo htmlspecialchars($reponse['texte_reponse']); ?>" data-reponse-correcte="<?php echo $reponse['est_correcte']; ?>">
-                                                                <i class="bi bi-pencil"></i>
-                                                            </button>
-                                                            <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteReponseModal" data-reponse-id="<?php echo $reponse['id']; ?>">
-                                                                <i class="bi bi-trash"></i>
-                                                            </button>
-                                                        </div>
-                                                    </li>
-                                                <?php endforeach; ?>
-                                            <?php else: ?>
-                                                <li class="list-group-item text-center text-muted">Aucune réponse pour cette question.</li>
-                                            <?php endif; ?>
-                                        </ul>
-                                        <div class="mt-3">
-                                            <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addReponseModal" data-question-id="<?php echo $question['id']; ?>">
-                                                <i class="bi bi-plus-circle"></i> Ajouter une réponse
-                                            </button>
+    <div class="bg-theme rounded-4 p-3 py-4 overflow-hidden">
+        <div class="row g-4 p-4">
+            <!-- Colonne des Questions -->
+            <div class="col-lg-7">
+                <div class="bg-theme-accent p-4 rounded-4 h-100">
+                    <h3 class="fs-4 fw-bold mb-4">Questions</h3>
+                    <div class="accordion" id="questionsAccordion">
+                        <?php if ($questions): ?>
+                            <?php foreach ($questions as $index => $question): ?>
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="heading<?php echo $question['id']; ?>">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse<?php echo $question['id']; ?>" aria-expanded="false" aria-controls="collapse<?php echo $question['id']; ?>">
+                                            <?php echo htmlspecialchars($question['texte_question']); ?>
+                                        </button>
+                                    </h2>
+                                    <div id="collapse<?php echo $question['id']; ?>" class="accordion-collapse collapse" aria-labelledby="heading<?php echo $question['id']; ?>" data-bs-parent="#questionsAccordion">
+                                        <div class="accordion-body">
+                                            <div class="d-flex justify-content-end mb-3">
+                                                <button type="button" class="btn btn-sm btn-warning me-2" data-bs-toggle="modal" data-bs-target="#editQuestionModal" data-question-id="<?php echo $question['id']; ?>" data-question-texte="<?php echo htmlspecialchars($question['texte_question']); ?>">
+                                                    <i class="bi bi-pencil-square"></i> Modifier
+                                                </button>
+                                                <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteQuestionModal" data-question-id="<?php echo $question['id']; ?>" data-question-texte="<?php echo htmlspecialchars($question['texte_question']); ?>">
+                                                    <i class="bi bi-trash"></i> Supprimer
+                                                </button>
+                                            </div>
+                                            <h6 class="text-muted">Réponses</h6>
+                                            <?php $reponses = recupererReponsesParQuestion($question['id']); ?>
+                                            <ul class="list-group">
+                                                <?php if ($reponses): ?>
+                                                    <?php foreach ($reponses as $reponse): ?>
+                                                        <li class="list-group-item d-flex justify-content-between align-items-center <?php echo $reponse['est_correcte'] ? 'list-group-item-success' : ''; ?>">
+                                                            <span>
+                                                                <?php echo htmlspecialchars($reponse['texte_reponse']); ?>
+                                                                <?php if ($reponse['est_correcte']): ?>
+                                                                    <span class="badge bg-success rounded-pill ms-2">Correcte</span>
+                                                                <?php endif; ?>
+                                                            </span>
+                                                            <div>
+                                                                <button type="button" class="btn btn-sm btn-outline-warning" data-bs-toggle="modal" data-bs-target="#editReponseModal" data-reponse-id="<?php echo $reponse['id']; ?>" data-reponse-texte="<?php echo htmlspecialchars($reponse['texte_reponse']); ?>" data-reponse-correcte="<?php echo $reponse['est_correcte']; ?>">
+                                                                    <i class="bi bi-pencil"></i>
+                                                                </button>
+                                                                <button type="button" class="btn btn-sm btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteReponseModal" data-reponse-id="<?php echo $reponse['id']; ?>">
+                                                                    <i class="bi bi-trash"></i>
+                                                                </button>
+                                                            </div>
+                                                        </li>
+                                                    <?php endforeach; ?>
+                                                <?php else: ?>
+                                                    <li class="list-group-item text-center text-muted">Aucune réponse pour cette question.</li>
+                                                <?php endif; ?>
+                                            </ul>
+                                            <div class="mt-3">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addReponseModal" data-question-id="<?php echo $question['id']; ?>">
+                                                    <i class="bi bi-plus-circle"></i> Ajouter une réponse
+                                                </button>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <div class="text-center text-muted p-4">
+                                <p>Aucune question dans ce QCM pour le moment.</p>
+                                <p>Commencez par en ajouter une en utilisant le formulaire ci-contre.</p>
                             </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <div class="text-center text-muted p-4">
-                            <p>Aucune question dans ce QCM pour le moment.</p>
-                            <p>Commencez par en ajouter une en utilisant le formulaire ci-contre.</p>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <!-- Colonne d'Actions -->
-        <div class="col-lg-5">
-            <div class="bg-theme p-4 rounded-4 h-100">
-                <h3 class="fs-4 fw-bold mb-4">Ajouter une Question</h3>
-                <form action="<?php echo get_full_url('includes/api/question.php?add&qcm_id=' . $qcm_id); ?>" method="post" class="needs-validation" novalidate>
-                    <input type="hidden" name="qcm_id" value="<?php echo $qcm_id; ?>">
-                    <div class="mb-3">
-                        <label for="texte_question" class="form-label">Texte de la question <span class="text-danger">*</span></label>
-                        <textarea class="form-control" id="texte_question" name="texte_question" rows="4" required></textarea>
-                        <div class="invalid-feedback">
-                            Veuillez fournir le texte de la question.
+    
+            <!-- Colonne d'Actions -->
+            <div class="col-lg-5">
+                <div class="bg-theme-accent p-4 rounded-4 h-100">
+                    <h3 class="fs-4 fw-bold mb-4">Ajouter une Question</h3>
+                    <form action="<?php echo get_full_url('includes/api/question.php?add&qcm_id=' . $qcm_id); ?>" method="post" class="needs-validation" novalidate>
+                        <input type="hidden" name="qcm_id" value="<?php echo $qcm_id; ?>">
+                        <div class="mb-3">
+                            <label for="texte_question" class="form-label">Texte de la question <span class="text-danger">*</span></label>
+                            <textarea class="form-control" id="texte_question" name="texte_question" rows="4" required></textarea>
+                            <div class="invalid-feedback">
+                                Veuillez fournir le texte de la question.
+                            </div>
                         </div>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Ajouter la question</button>
-                </form>
+                        <button type="submit" class="btn btn-primary w-100">Ajouter la question</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
