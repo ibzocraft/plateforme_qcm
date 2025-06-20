@@ -1,12 +1,21 @@
 <?php
 require_once __DIR__."/../../database/crud/utilisateur.php";
 require_once __DIR__."/../../services/core/functions.php";
+require_once __DIR__."/../../services/etudiant/etudiant.service.php";
 
 session_start();
 function login($email, $password): array|false {
     $user = verifyUtilisateurCredentials($email, $password);
     if($user) {
         $_SESSION["user"] = $user;
+        return $user;
+    }
+    return false;
+}
+
+function signup($email, $password, $nom, $prenom, $classe): array|false {
+    $user = ajouterEtudiant("", $prenom, $nom, $email, $password, $classe);
+    if($user) {
         return $user;
     }
     return false;

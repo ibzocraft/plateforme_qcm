@@ -24,6 +24,36 @@ if (isset($_GET['login'])) {
     }
 }
 
+// signup
+if (isset($_GET['signup'])) {
+    if (!check_required_fields(['email', 'password', 'password_confirm', 'nom', 'prenom', 'classe'])) {
+        redirect_with_error(get_full_url("pages/auth/inscription.php"), "Le formulaire est incomplet");
+    }
+
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $password_confirm = $_POST['password_confirm'];
+    $nom = $_POST['nom'];
+    $prenom = $_POST['prenom'];
+    $classe = $_POST['classe'];
+    
+    if ($password != $password_confirm) {
+        redirect_with_error(get_full_url("pages/auth/inscription.php"), "Les mots de passe ne correspondent pas");
+    }
+
+    $user = signup($email, $password, $nom, $prenom, $classe);
+    if ($user) {
+        $logged = login($email, $password);
+        if ($logged) {
+                redirect_with_success(get_full_url("pages/portail/dashboard.php"), "Inscription réussie, vous êtes maintenant connecté !");
+        } else {
+            redirect_with_error(get_full_url("pages/auth/connection.php"), "Inscription réussie, mais une erreur est survenue lors de la connexion");
+        }
+    } else {
+        redirect_with_error(get_full_url("pages/auth/inscription.php"), "Une erreur est survenue lors de l'inscription");
+    }
+}
+
 // logout
 if (isset($_GET['logout'])) {
     logout();
