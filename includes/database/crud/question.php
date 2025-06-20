@@ -51,7 +51,7 @@ function supprimerQuestion(int $id): bool {
 function recupererQuestionsParQcm(int $qcm_id): array|false {
     $db = connectToDB();
     try {
-        $sql = "SELECT * FROM questions WHERE qcm_id = :qcm_id ORDER BY id";
+        $sql = "SELECT * FROM questions WHERE qcm_id = :qcm_id ORDER BY RAND()";
         $stmt = $db->prepare($sql);
         $stmt->execute([':qcm_id' => $qcm_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

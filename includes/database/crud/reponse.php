@@ -53,7 +53,7 @@ function supprimerReponse(int $id): bool {
 function recupererReponsesParQuestion(int $question_id): array|false {
     $db = connectToDB();
     try {
-        $sql = "SELECT * FROM reponses WHERE question_id = :question_id ORDER BY id";
+        $sql = "SELECT * FROM reponses WHERE question_id = :question_id ORDER BY RAND()";
         $stmt = $db->prepare($sql);
         $stmt->execute([':question_id' => $question_id]);
         return $stmt->fetchAll(PDO::FETCH_ASSOC);

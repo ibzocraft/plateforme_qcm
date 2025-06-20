@@ -36,7 +36,7 @@
      <!-- /HEADER -->
  
     <div class="bg-theme rounded-4 p-3 py-4 overflow-hidden mb-3">
-        <form action="<?php echo get_full_url('includes/api/resultat.php?submit'); ?>" method="post" class="needs-validation" novalidate>
+        <form action="<?php echo get_full_url('includes/api/resultat.php?submit'); ?>" method="post" class="needs-validation spawn-ladder-up" novalidate>
             <input type="hidden" name="qcm_id" value="<?php echo $qcm_id; ?>">
     
             <?php if ($questions): ?>

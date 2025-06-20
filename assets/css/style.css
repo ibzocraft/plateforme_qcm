@@ -1,3 +1,8 @@
+@keyframes pulse {
+    0% { opacity: 0.5; transform: scaleX(1); }
+    50% { opacity: 1; transform: scaleX(1.1); }
+    100% { opacity: 0.5; transform: scaleX(1); }
+}
 
 [data-bs-theme="dark"] {
     --bs-body-bg: #0d1117;
@@ -42,6 +47,30 @@
         background-color: #FFFFFF !important;
     }
 }
+
+[data-bs-theme="light"], [data-bs-theme="dark"] {
+    a.active {
+        color: var(--bs-primary) !important;
+        &:after {
+            animation: pulse 2s ease infinite;
+            content: '';
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            width: 5px;
+            height: 2px;
+            border-radius: 100%;
+            background-color: var(--bs-primary);
+            position: relative;
+            bottom: 0;
+        }
+    }
+}
+
+
+
+
+
 
 /* #60758a */
 
@@ -127,6 +156,7 @@
     :nth-child(3) { animation: slide-up 2s ease; }
     :nth-child(4) { animation: slide-up 2.5s ease; }
     :nth-child(5) { animation: slide-up 3s ease; }
+    :nth-child(5 + n) { animation: slide-up 3.5s ease; }
 }
 /* /ANIMATIONS */
 

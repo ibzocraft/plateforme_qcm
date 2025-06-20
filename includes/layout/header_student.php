@@ -1,6 +1,7 @@
 <?php 
 require_once __DIR__ . '/../../includes/services/utils/path.php'; 
 require_once __DIR__ . '/../../includes/services/core/functions.php';
+$current_page = get_current_page();
 ?>
 
 <header class="d-flex align-items-center justify-content-between border-bottom px-4 py-2 mx-3 mt-3 rounded-4 bg-theme position-sticky top-0" style="z-index: 500;">
@@ -12,10 +13,10 @@ require_once __DIR__ . '/../../includes/services/core/functions.php';
     </div>
     <div class="d-flex flex-grow-1 justify-content-end gap-4">
         <div class="d-flex align-items-center gap-4">
-            <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/accueil.php"); ?>">Accueil</a>
-            <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/portail/dashboard.php"); ?>">Dashboard</a>
-            <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/portail/qcms/qcms.php"); ?>">QCMs</a>
-            <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url("pages/portail/statistiques.php"); ?>">Statistiques</a>
+            <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/accueil.php"); ?>">Accueil</a>
+            <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "dashboard.php") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/portail/dashboard.php"); ?>">Dashboard</a>
+            <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "qcms/") ?"active" : ""; ?>" href="<?php echo get_full_url("pages/portail/qcms/qcms.php"); ?>">QCMs</a>
+            <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "statistiques.php") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/portail/statistiques.php"); ?>">Statistiques</a>
         </div>
         <a class="btn btn-icon <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'btn-dark' : 'btn-light'; ?>" role="button" href="<?php echo get_full_url("includes/api/theme.php?toggle"); ?>" >
             <i class="bi <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'bi-moon-stars' : 'bi-brightness-high'; ?>"></i>

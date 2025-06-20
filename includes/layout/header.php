@@ -2,6 +2,7 @@
     require_once __DIR__ . '/../../includes/services/utils/path.php'; 
     require_once __DIR__ . '/../../includes/services/core/auth.php';
 
+    $current_page = get_current_page();
     $role = null;
     if (is_authenticated()) $role = get_authenticated_user()['role'];
 ?>
@@ -15,8 +16,8 @@
 <div class="d-flex flex-grow-1 justify-content-end gap-4">
 <div class="d-flex align-items-center gap-4">
     <!-- Accueil -->
-    <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url('pages/accueil.php'); ?>">Accueil</a>
-    <a class="text-dark small fw-medium text-decoration-none" href="<?php echo get_full_url('pages/a-propos.php'); ?>">A Propos</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="<?php echo get_full_url('pages/accueil.php'); ?>">Accueil</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "a-propos.php") ? "active" : ""; ?>" href="<?php echo get_full_url('pages/a-propos.php'); ?>">A Propos</a>
     <?php if ($role == null) { ?>
         <div>
             <a class="btn btn-sm btn-primary fw-medium text-decoration-none" href="<?php echo get_full_url('pages/auth/inscription.php'); ?>">S'inscrire</a>
