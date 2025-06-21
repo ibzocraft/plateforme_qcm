@@ -2,7 +2,8 @@
     require_once __DIR__ . '/../../includes/layout/page.php';
     require_once __DIR__ . '/../../includes/database/crud/qcm.php';
     require_once __DIR__ . '/../../includes/database/crud/resultat.php';
-
+    require_once __DIR__ . '/../../includes/services/utils/utils.php';
+    
     if (!is_authenticated()) redirect(get_full_url("pages/auth/connection.php"));
     $student = get_authenticated_user();
 
@@ -35,7 +36,7 @@
         </div>
         <div class="col-4">
             <?php include_once __DIR__ . '/../../includes/elements/time.php'; ?>
-            <p class="text-muted text-end"><?php echo (new DateTime())->format('l, d F Y'); ?></p>
+            <p class="text-muted text-end"><?php echo get_current_date_fr(); ?></p>
         </div>
     </div>
     <!-- /Page Header -->

@@ -11,3 +11,5 @@ require_once __DIR__ . '/../../database/crud/qcm.php';
 function getLastQCMResults() {
     return recupererDerniersResultats();
 }
+
+

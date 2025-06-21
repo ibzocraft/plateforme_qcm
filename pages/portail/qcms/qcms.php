@@ -32,7 +32,7 @@
     ?>
     <!-- /Page Header -->
 
-    <div class="bg-theme rounded-4 p-3 overflow-hidden">
+    <div class="bg-theme rounded-4 p-3 overflow-hidden" style="min-height: 60vh;">
         <div class="row g-4 spawn-ladder-up">
             <?php if ($qcms): ?>
                 <?php foreach ($qcms as $qcm): ?>

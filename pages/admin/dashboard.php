@@ -4,6 +4,7 @@ require_once __DIR__ . '/../../includes/database/db.php';
 require_once __DIR__ . '/../../includes/database/crud/utilisateur.php';
 require_once __DIR__ . '/../../includes/database/crud/qcm.php';
 require_once __DIR__ . '/../../includes/database/crud/resultat.php';
+require_once __DIR__ . '/../../includes/services/utils/utils.php';
 
 if (!is_authenticated()) redirect(get_full_url("pages/auth/connection.php"));
 if (!is_admin()) redirect(get_full_url("pages/portail/dashboard.php"));
@@ -54,7 +55,6 @@ $participation_change_percent = calculate_percentage_change($current_participati
 // Average Score (Last 30 days)
 $current_avg_score = getAverageScoreEntreJours(29, 0);
 $previous_avg_score = getAverageScoreEntreJours(59, 30);
-// For score, showing the raw change is more intuitive than percentage.
 $score_change_raw = $current_avg_score - $previous_avg_score;
 
 // Charts Data
@@ -67,7 +67,7 @@ $month_map = [];
 for ($i = 5; $i >= 0; $i--) {
     $date = new DateTime("-$i months");
     $formatted_month_ym = $date->format('Y-m');
-    // Use ucwords and a mapping for French months to ensure correct capitalization and language.
+    // Traduction du mois en français
     $month_name = strtr($date->format('F'), [
         'January' => 'Janvier',
         'February' => 'Février',
@@ -144,7 +144,7 @@ $recent_results = recupererDerniersResultats(5);
         </div>
         <div class="col-4">
             <?php include_once __DIR__ . '/../../includes/elements/time.php'; ?>
-            <p class="text-muted text-end"><?php echo (new DateTime())->format('l, d F Y'); ?></p>
+            <p class="text-muted text-end"><?php echo get_current_date_fr(); ?></p>
         </div>
     </div>
 

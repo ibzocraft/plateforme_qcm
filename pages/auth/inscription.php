@@ -46,7 +46,6 @@
                     </option>
                 <?php endforeach; ?>
             </select>
-            <small class="text-muted">Classe de l'étudiant</small>
         </div>
         <div class="mb-3 form-group">
           <label class="form-label fw-medium" for="password">Mot de passe <span class="text-danger">*</span></label>
