@@ -3,13 +3,14 @@ require_once __DIR__ . '/../config/config.php';
 
 function connectToDB(): PDO {
     $servername = $_ENV['DB_HOST'];
+    $port = $_ENV['DB_PORT'];
     $username = $_ENV['DB_USER'];
     $password = $_ENV['DB_PASSWORD'];
     $dbname = $_ENV['DB_NAME'];
 
     $db_connection = null;
     try {
-        $db_connection = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+        $db_connection = new PDO("mysql:host=$servername;port=$port;dbname=$dbname", $username, $password);
     
         // set the PDO error mode to exception
         $db_connection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);

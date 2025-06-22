@@ -1,0 +1,6 @@
+.env
+/vendor
+
+# Logs
+/includes/storage/logs/*.log
+/includes/storage/actions/*.log
