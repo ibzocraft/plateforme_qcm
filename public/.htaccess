@@ -1,0 +1,8 @@
+# Désactiver le listing des fichiers quand on visite un dossier
+Options -Indexes
+
+# Configuration pour faire passer toutes les requêtes par index.php
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule . index.php [L]

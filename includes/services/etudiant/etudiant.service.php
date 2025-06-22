@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../../database/crud/utilisateur.php';
 require_once __DIR__ . '/../../database/crud/resultat.php';
-require_once __DIR__ . '/../../services/core/functions.php';
+require_once __DIR__ . '/../core/functions.service.php';
 
 function get_etudiants() {
     $etudiants = recupererUtilisateursParRole('etudiant');

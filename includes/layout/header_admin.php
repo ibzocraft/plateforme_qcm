@@ -1,6 +1,6 @@
 <?php 
-require_once __DIR__ . '/../../includes/services/utils/path.php'; 
-require_once __DIR__ . '/../../includes/services/core/functions.php';
+require_once __DIR__ . '/../services/utils/path.service.php'; 
+require_once __DIR__ . '/../services/core/functions.service.php';
 $current_page = get_current_page();
 ?>
 
@@ -13,26 +13,26 @@ $current_page = get_current_page();
 </div>
 <div class="d-flex flex-grow-1 justify-content-end gap-4">
 <div class="d-flex align-items-center gap-4">
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/accueil.php"); ?>">Accueil</a>
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "dashboard.php") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/admin/dashboard.php"); ?>">Dashboard</a>
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "qcms/") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/admin/qcms/qcms.php"); ?>">QCMs</a>
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "etudiants/") ? "active" : ""; ?>" href="<?php echo get_full_url("pages/admin/etudiants/etudiants.php"); ?>">Etudiants</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="/pages/accueil.php">Accueil</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "dashboard.php") ? "active" : ""; ?>" href="/pages/admin/dashboard.php">Dashboard</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "qcms/") ? "active" : ""; ?>" href="/pages/admin/qcms/qcms.php">QCMs</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "etudiants/") ? "active" : ""; ?>" href="/pages/admin/etudiants/etudiants.php">Etudiants</a>
 </div>
-<a class="btn btn-icon <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'btn-dark' : 'btn-light'; ?>" role="button" href="<?php echo get_full_url("includes/api/theme.php?toggle"); ?>" >
+<a class="btn btn-icon <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'btn-dark' : 'btn-light'; ?>" role="button" href="/settings/toggle-theme">
     <i class="bi <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'bi-moon-stars' : 'bi-brightness-high'; ?>"></i>
 </a>
 <div class="dropdown">
   <img
   role="button"
   class="rounded-circle object-fit-contain ms-3"
-  src="<?php echo_full_url("/assets/images/profile-pic.png") ?>" alt="avatar" class="rounded-circle" style="width: 2.5rem; height: 2.5rem; background-size: cover; background-position: center;"
+  src="<?php echo "/assets/images/profile-pic.png"; ?>" alt="avatar" class="rounded-circle" style="width: 2.5rem; height: 2.5rem; background-size: cover; background-position: center;"
   data-bs-toggle="dropdown" aria-expanded="false"
   >
   <ul class="dropdown-menu pb-1">
-    <li><a class="dropdown-item" href="<?php echo get_full_url("pages/admin/profil.php"); ?>">Mon Profil</a></li>
+    <li><a class="dropdown-item" href="/pages/admin/profil.php">Mon Profil</a></li>
     <li><hr class="dropdown-divider mt-1 mb-1"></li>
     <li>
-        <a class="dropdown-item text-danger small fw-bold" href="<?php echo get_full_url("includes/api/auth.php?logout"); ?>">
+        <a class="dropdown-item text-danger small fw-bold" href="/auth/logout">
             <i class="bi bi-box-arrow-left me-2"></i>
             Se Déconnecter
         </a>

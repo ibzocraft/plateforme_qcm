@@ -1,8 +1,8 @@
 <?php
 
-require_once __DIR__ . '/../services/core/auth.php';
-require_once __DIR__ . '/../services/utils/path.php';
-require_once __DIR__ . '/../services/utils/notification.php';
+require_once __DIR__ . '/../services/core/auth.service.php';
+require_once __DIR__ . '/../services/utils/path.service.php';
+require_once __DIR__ . '/../services/utils/notification.service.php';
 
 /**
  * Cette fonction génère et affiche les balises HTML initiales d'une page web.
@@ -16,7 +16,7 @@ function begin_page($page_title): void {
     if(isset($_COOKIE["theme"])) $theme = $_COOKIE["theme"];
     // $theme = "dark";
     
-    $assets_path = get_full_url("assets");
+    $assets_path = "/assets";
 
     $html = <<<HTML
     <!DOCTYPE html>
@@ -66,7 +66,7 @@ function begin_page($page_title): void {
  * @return void
  */
 function end_page(): void {
-    $assets_path = get_full_url("assets");
+    $assets_path = "/assets";
 
     if (isset($_GET['error'])) notify_error("Erreur", $_GET['error']);
     if (isset($_GET['success'])) notify_success("Succès", $_GET['success']);

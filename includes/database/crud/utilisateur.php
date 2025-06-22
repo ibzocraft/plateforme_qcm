@@ -1,7 +1,7 @@
 <?php
 
 require_once __DIR__ . '/../db.php';
-require_once __DIR__ . '/../../services/core/functions.php';
+require_once __DIR__ . '/../../services/core/functions.service.php';
 
 /**
  * Ajoute un nouvel étudiant dans la base de données

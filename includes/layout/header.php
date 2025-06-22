@@ -1,6 +1,6 @@
 <?php 
-    require_once __DIR__ . '/../../includes/services/utils/path.php'; 
-    require_once __DIR__ . '/../../includes/services/core/auth.php';
+    require_once __DIR__ . '/../services/utils/path.service.php'; 
+    require_once __DIR__ . '/../services/core/auth.service.php';
 
     $current_page = get_current_page();
     $role = null;
@@ -16,23 +16,23 @@
 <div class="d-flex flex-grow-1 justify-content-end gap-4">
 <div class="d-flex align-items-center gap-4">
     <!-- Accueil -->
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="<?php echo get_full_url('pages/accueil.php'); ?>">Accueil</a>
-    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "a-propos.php") ? "active" : ""; ?>" href="<?php echo get_full_url('pages/a-propos.php'); ?>">A Propos</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "accueil.php") ? "active" : ""; ?>" href="/pages/accueil.php">Accueil</a>
+    <a class="text-dark small fw-medium text-decoration-none <?php echo str_contains($current_page, "a-propos.php") ? "active" : ""; ?>" href="/pages/a-propos.php">A Propos</a>
     <?php if ($role == null) { ?>
         <div>
-            <a class="btn btn-sm btn-primary fw-medium text-decoration-none" href="<?php echo get_full_url('pages/auth/inscription.php'); ?>">S'inscrire</a>
-            <a class="text-dark btn btn-sm btn-outline-secondary fw-medium text-decoration-none" href="<?php echo get_full_url('pages/auth/connection.php'); ?>">Se Connecter</a>
+            <a class="btn btn-sm btn-primary fw-medium text-decoration-none" href="/pages/auth/inscription.php">S'inscrire</a>
+            <a class="text-dark btn btn-sm btn-outline-secondary fw-medium text-decoration-none" href="/pages/auth/connection.php">Se Connecter</a>
         </div>
     <?php } ?>
     <?php if ($role == 'admin') { ?>
-        <a class="btn btn-sm btn-dark fw-medium text-decoration-none" href="<?php echo get_full_url('pages/admin/dashboard.php'); ?>">Panel Admin</a>
+        <a class="btn btn-sm btn-dark fw-medium text-decoration-none" href="/pages/admin/dashboard.php">Panel Admin</a>
     <?php } ?>
     <?php if ($role == 'etudiant') { ?>
-        <a class="btn btn-sm btn-dark fw-medium text-decoration-none" href="<?php echo get_full_url('pages/portail/dashboard.php'); ?>">Portail Etudiant</a>
+        <a class="btn btn-sm btn-dark fw-medium text-decoration-none" href="/pages/portail/dashboard.php">Portail Etudiant</a>
     <?php } ?>
     <!-- /Accueil -->
 </div>
-<a class="btn btn-icon <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'btn-dark' : 'btn-light'; ?>" role="button" href="<?php echo get_full_url("includes/api/theme.php?toggle"); ?>" >
+<a class="btn btn-icon <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'btn-dark' : 'btn-light'; ?>" role="button" href="/settings/toggle-theme">
     <i class="bi <?php echo isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark' ? 'bi-moon-stars' : 'bi-brightness-high'; ?>"></i>
 </a>
 </div>

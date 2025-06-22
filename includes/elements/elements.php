@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../services/utils/path.php';
+require_once __DIR__ . '/../services/utils/path.service.php';
 
 function _element_var_replacer(string $html, array $vars) {
     foreach ($vars as $key => $value) {
