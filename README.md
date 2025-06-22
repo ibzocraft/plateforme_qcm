@@ -9,51 +9,35 @@ Une plateforme de Quiz à Choix Multiples développée en PHP avec Bootstrap.
 - Serveur web (Apache/Nginx)
 - XAMPP (recommandé pour le développement)
 
-## Installation
 
-1. Clonez ce dépôt dans votre dossier htdocs de XAMPP
-2. Créez une base de données MySQL nommée `plateforme_qcm`
-3. Importez le schéma de la base de données (à venir)
-4. Configurez les paramètres de connexion dans `config.php`
-5. Accédez à l'application via votre navigateur : `http://localhost/Web/plateforme_qcm`
+## Fichier .env
+Lorsque vous venez de clone le projet pour la première fois vous aurez besoin de créer un fichier .env
+et d'y copier le contenu du fichier .env.example.
+Après cela, vérifier que :
+- DB_NAME correspond à la base de donnée que vous avez créé dans votre sql, sinon créez une BDD vide du même nom.
+- BASE_URL correspond au lien du répertoire de base de l'application.
 
-## Structure du projet
-
+## Creation des tables et seeding
+Pour créer la base de données et y intégrer des données de tests lancez les trois scripts suivants:
+```bash
+php ./includes/database/scripts/create_db.php
 ```
-plateforme_qcm/
-├── assets/
-│   ├── css/
-│   │   └── style.css
-│   └── js/
-│       └── main.js
-├── includes/
-├── references/
-│   └── Instructions.docx
-├── config.php
-├── index.php
-└── README.md
+```bash
+php ./includes/database/scripts/create_tables.php
+```
+```bash
+php ./includes/database/scripts/seed_db.php
+```
+Bien évidemment, lancez ces commandes à partir de la racine du projet.
+
+Ou lancer les trois en même temps:
+```bash
+php ./includes/database/scripts/create_db.php;php ./includes/database/scripts/create_tables.php;php ./includes/database/scripts/seed_db.php
 ```
 
-## Fonctionnalités
+POUR UNE MIGRATION DE REINITIALISATION DE LA BASE COMPLETE:
+```bash
+php ./includes/database/scripts/drop/drop_db.php;php ./includes/database/scripts/create_db.php;php ./includes/database/scripts/create_tables.php;php ./includes/database/scripts/seed_db.php
+```
 
-- Interface responsive avec Bootstrap 5
-- Gestion des utilisateurs
-- Création et gestion de quiz
-- Système de notation
-- Statistiques et rapports
-
-## Technologies utilisées
-
-- PHP
-- MySQL
-- Bootstrap 5 (CDN)
-- JavaScript
-- HTML5/CSS3
-
-## Contribution
-
-Les contributions sont les bienvenues ! N'hésitez pas à ouvrir une issue ou à soumettre une pull request.
-
-## Licence
-
-Ce projet est sous licence MIT. 
+## Régles de développement
