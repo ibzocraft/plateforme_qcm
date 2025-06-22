@@ -1,7 +1,3 @@
--- Création de la base de données
-CREATE DATABASE IF NOT EXISTS plateforme_qcm;
-USE plateforme_qcm;
-
 -- Table utilisateurs
 CREATE TABLE utilisateurs (
     id INT AUTO_INCREMENT PRIMARY KEY,
