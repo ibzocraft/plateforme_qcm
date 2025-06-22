@@ -40,4 +40,13 @@ POUR UNE MIGRATION DE REINITIALISATION DE LA BASE COMPLETE:
 php ./includes/database/scripts/drop/drop_db.php;php ./includes/database/scripts/create_db.php;php ./includes/database/scripts/create_tables.php;php ./includes/database/scripts/seed_db.php
 ```
 
+Sur Linux:
+
+```bash
+php ./includes/database/scripts/create_db.php&&php ./includes/database/scripts/create_tables.php&&php ./includes/database/scripts/seed_db.php
+```
+```bash
+php ./includes/database/scripts/drop/drop_db.php&&php ./includes/database/scripts/create_db.php&&php ./includes/database/scripts/create_tables.php&&php ./includes/database/scripts/seed_db.php
+```
+
 ## Régles de développement
