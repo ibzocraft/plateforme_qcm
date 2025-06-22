@@ -1,8 +1,29 @@
 # Désactiver le listing des fichiers quand on visite un dossier
 Options -Indexes
 
-# Configuration pour faire passer toutes les requêtes par index.php
+# Activer le moteur de réécriture d'URL
 RewriteEngine On
+
+# ===================================================================
+# Règle 1 : Forcer la redirection vers HTTPS
+# ===================================================================
+
+# Condition A : SI la connexion n'est pas déjà sécurisée via un proxy (load balancer, etc.)
+RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+# Condition B : OU SI la connexion directe n'est pas sur le port HTTPS
+RewriteCond %{HTTPS} !on
+# Action : Si la condition A OU B est vraie, alors effectuer une redirection permanente (301) vers la version HTTPS de l'URL demandée.
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+
+# ===================================================================
+# Règle 2 : Faire passer toutes les requêtes par le Front Controller (index.php)
+# ===================================================================
+
+# Condition 1 : SI la requête ne correspond PAS à un fichier physique existant (-f)
 RewriteCond %{REQUEST_FILENAME} !-f
+# Condition 2 : ET SI la requête ne correspond PAS à un répertoire physique existant (-d)
 RewriteCond %{REQUEST_FILENAME} !-d
+# Action : Si les deux conditions précédentes sont vraies, réécrire la requête pour qu'elle soit traitée par index.php.
+# Le drapeau [L] signifie que si cette règle s'applique, Apache doit s'arrêter de traiter les règles suivantes.
 RewriteRule . index.php [L]
