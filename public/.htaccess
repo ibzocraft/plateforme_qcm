@@ -9,11 +9,11 @@ RewriteEngine On
 # ===================================================================
 
 # Condition A : SI la connexion n'est pas déjà sécurisée via un proxy (load balancer, etc.)
-RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
+#RewriteCond %{HTTP:X-Forwarded-Proto} !https [OR]
 # Condition B : OU SI la connexion directe n'est pas sur le port HTTPS
-RewriteCond %{HTTPS} !on
+#RewriteCond %{HTTPS} !on
 # Action : Si la condition A OU B est vraie, alors effectuer une redirection permanente (301) vers la version HTTPS de l'URL demandée.
-RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+#RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
 
 # ===================================================================
