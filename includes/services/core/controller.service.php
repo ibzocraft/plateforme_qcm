@@ -56,7 +56,7 @@ function handle_request(string $method, string $uri) {
         $controller['handler']();
     } else {
         http_response_code(404);
-        echo "404 Not Found";
+        require_once __DIR__ . "/../../../public/404.php";
     }
 }
 
