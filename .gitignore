@@ -1,5 +1,7 @@
 .env
 /vendor
+**/.htaccess
+
 
 # Logs
 /includes/storage/logs/*.log
